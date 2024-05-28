@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.2 (Python 3.11.3 on win32)" generated="20240423 15:36:34.515" rpa="false" schemaversion="3">
+<suite id="s1" name="Api Testing Usuarios" source="c:\Users\Edu\Desktop\Automacao\API Testing\tests\api_testing_usuarios.robot">
+<test id="s1-t1" name="Cenário 05: Logar com usuário inexistente" line="31">
+<kw name="Realizar Login com usuário inexistente" library="api_testing_usuarios">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${body}</var>
+<arg>email=usuario_inexistente@erro.com.br</arg>
+<arg>password=1234</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20240423 15:36:34.706" level="INFO">${body} = {'email': 'usuario_inexistente@erro.com.br', 'password': '1234'}</msg>
+<status status="PASS" starttime="20240423 15:36:34.706" endtime="20240423 15:36:34.706"/>
+</kw>
+<kw name="Criar Sessão na ServeRest" library="api_testing_usuarios">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20240423 15:36:34.706" level="INFO">${headers} = {'accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20240423 15:36:34.706" endtime="20240423 15:36:34.706"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=ServeRest</arg>
+<arg>url=https://serverest.dev</arg>
+<arg>headers=${headers}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20240423 15:36:34.706" level="INFO">Creating Session using : alias=ServeRest, url=https://serverest.dev, headers={'accept': 'application/json', 'Content-Type': 'application/json'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20240423 15:36:34.706" endtime="20240423 15:36:34.706"/>
+</kw>
+<status status="PASS" starttime="20240423 15:36:34.706" endtime="20240423 15:36:34.706"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resposta}</var>
+<arg>alias=ServeRest</arg>
+<arg>url=/login</arg>
+<arg>json=${body}</arg>
+<arg>expected_status=401</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20240423 15:36:35.124" level="INFO">POST Request : url=https://serverest.dev/login 
+ path_url=/login 
+ headers={'User-Agent': 'python-requests/2.28.2', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '64'} 
+ body=b'{"email": "usuario_inexistente@erro.com.br", "password": "1234"}' 
+ </msg>
+<msg timestamp="20240423 15:36:35.124" level="INFO">POST Response : url=https://serverest.dev/login 
+ status=401, reason=Unauthorized 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'content-type': 'application/json; charset=utf-8', 'X-Cloud-Trace-Context': 'ebb7b1a58508c0f5abaf84c8a88c5cae;o=1', 'Date': 'Tue, 23 Apr 2024 18:35:59 GMT', 'Server': 'Google Frontend', 'Content-Length': '48'} 
+ body={
+    "message": "Email e/ou senha inválidos"
+} 
+ </msg>
+<msg timestamp="20240423 15:36:35.124" level="INFO">C:\Users\Edu\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'serverest.dev'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20240423 15:36:35.124" level="INFO">${resposta} = &lt;Response [401]&gt;</msg>
+<status status="PASS" starttime="20240423 15:36:34.706" endtime="20240423 15:36:35.124"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${RESPOSTA}</arg>
+<arg>${resposta.json()}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20240423 15:36:35.124" level="INFO">${RESPOSTA} = {'message': 'Email e/ou senha inválidos'}</msg>
+<status status="PASS" starttime="20240423 15:36:35.124" endtime="20240423 15:36:35.124"/>
+</kw>
+<status status="PASS" starttime="20240423 15:36:34.706" endtime="20240423 15:36:35.124"/>
+</kw>
+<kw name="Conferir se deu falha no login" library="api_testing_usuarios">
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${RESPOSTA}</arg>
+<arg>message</arg>
+<arg>Email e/ou senha inválidos</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20240423 15:36:35.124" endtime="20240423 15:36:35.124"/>
+</kw>
+<status status="PASS" starttime="20240423 15:36:35.124" endtime="20240423 15:36:35.124"/>
+</kw>
+<status status="PASS" starttime="20240423 15:36:34.705" endtime="20240423 15:36:35.124"/>
+</test>
+<status status="PASS" starttime="20240423 15:36:34.521" endtime="20240423 15:36:35.124"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Api Testing Usuarios">Api Testing Usuarios</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
