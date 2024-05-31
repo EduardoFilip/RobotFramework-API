@@ -1,6 +1,8 @@
 *** Settings ***
 
+
 Resource  ../resources/api_testing_usuarios.resource
+
 
 *** Variables ***
 
